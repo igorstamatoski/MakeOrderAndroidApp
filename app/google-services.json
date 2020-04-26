@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "727590264385",
+    "firebase_url": "https://makeorders-813f8.firebaseio.com",
+    "project_id": "makeorders-813f8",
+    "storage_bucket": "makeorders-813f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:727590264385:android:53f9dc68a5e1ba447bb0c0",
+        "android_client_info": {
+          "package_name": "com.example.makeorderandroidapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "727590264385-jcmt06f0go7pms14cnraqdf23eh2vs7r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.makeorderandroidapp",
+            "certificate_hash": "a9867fca95eee01871b476f850df10d0ea897f9b"
+          }
+        },
+        {
+          "client_id": "727590264385-dmf7upqf2bm1qj4n4dftit79e6j7albt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnxmeS88vxbOuYG_DEBaF8tPDtjM3q3Z8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "727590264385-dmf7upqf2bm1qj4n4dftit79e6j7albt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
