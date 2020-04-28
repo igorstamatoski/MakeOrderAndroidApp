@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MakeOrderAndroidApp</string>
+    <string name="slogan">This is the slogan of our application!</string>
 </resources>
