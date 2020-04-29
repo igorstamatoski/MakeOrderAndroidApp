@@ -39,8 +39,6 @@ public class SignUp extends AppCompatActivity {
 
         btnSignUp = (Button) findViewById(R.id.btnSignUp);
 
-
-
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
