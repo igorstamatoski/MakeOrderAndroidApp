@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -71,7 +72,10 @@ public class ItemsList extends AppCompatActivity {
                 itemsViewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Toast.makeText(ItemsList.this, ""+local.getName(),Toast.LENGTH_SHORT).show();
+                        //Start new Activity
+                        Intent itemDetail = new Intent(ItemsList.this, ItemDetails.class);
+                        itemDetail.putExtra("ItemId",adapter.getRef(position).getKey());
+                        startActivity(itemDetail);
                     }
                 });
             }
