@@ -1,5 +1,6 @@
 package com.example.makeorderandroidapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.makeorderandroidapp.Common.Common;
@@ -43,6 +44,7 @@ public class Home extends AppCompatActivity {
 
     RecyclerView recycler_menu;
     RecyclerView.LayoutManager layoutManager;
+    FirebaseRecyclerAdapter<Category, MenuViewHolder> adapter;
 
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -100,7 +102,7 @@ public class Home extends AppCompatActivity {
 
     private void loadMenu() {
 
-        FirebaseRecyclerAdapter<Category, MenuViewHolder> adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class, R.layout.menu_item, MenuViewHolder.class, category) {
+            adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class, R.layout.menu_item, MenuViewHolder.class, category) {
             @Override
             protected void populateViewHolder(MenuViewHolder menuViewHolder, Category category, int i) {
 
@@ -111,7 +113,12 @@ public class Home extends AppCompatActivity {
                 menuViewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Toast.makeText(Home.this, ""+clickItem.getName(), Toast.LENGTH_SHORT).show();
+                        //Get category Id and send to ItemsList Activity
+                        Intent  itemList = new Intent(Home.this, ItemsList.class);
+                        itemList.putExtra("CategoryId", adapter.getRef(position).getKey());
+
+                        startActivity(itemList);
+
                     }
                 });
             }
