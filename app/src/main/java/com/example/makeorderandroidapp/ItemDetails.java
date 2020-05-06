@@ -3,10 +3,14 @@ package com.example.makeorderandroidapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.example.makeorderandroidapp.Database.Database;
+import com.example.makeorderandroidapp.Model.Order;
 import com.example.makeorderandroidapp.Model.ShopItem;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,6 +30,7 @@ public class ItemDetails extends AppCompatActivity {
     ElegantNumberButton numberButton;
 
     String itemId="";
+    ShopItem currentItem;
 
     FirebaseDatabase database;
     DatabaseReference items;
@@ -43,6 +48,21 @@ public class ItemDetails extends AppCompatActivity {
         //Init view
         numberButton = (ElegantNumberButton)findViewById(R.id.number_button);
         btnCart = (FloatingActionButton) findViewById(R.id.btnChart);
+
+        btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Database(getBaseContext()).addToCart(new Order(
+                        itemId,
+                        currentItem.getName(),
+                        numberButton.getNumber(),
+                        currentItem.getPrice(),
+                        currentItem.getDiscount()
+                ));
+
+                Toast.makeText(ItemDetails.this, "Added to Cart", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         item_description = (TextView) findViewById(R.id.item_description);
         item_name = (TextView) findViewById(R.id.item_name);
@@ -75,16 +95,13 @@ public class ItemDetails extends AppCompatActivity {
         items.child(itemId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ShopItem item = dataSnapshot.getValue(ShopItem.class);
-
-                Picasso.with(getBaseContext()).load(item.getImage())
+                currentItem = dataSnapshot.getValue(ShopItem.class);
+                Picasso.with(getBaseContext()).load(currentItem.getImage())
                         .into(item_image);
-
-                collapsingToolbarLayout.setTitle(item.getName());
-
-                item_price.setText(item.getPrice());
-                item_name.setText(item.getName());
-                item_description.setText(item.getDescription());
+                collapsingToolbarLayout.setTitle(currentItem.getName());
+                item_price.setText(currentItem.getPrice());
+                item_name.setText(currentItem.getName());
+                item_description.setText(currentItem.getDescription());
 
 
 
