@@ -7,6 +7,7 @@ public class Request {
     private String phone;
     private String name;
     private String address;
+    private String status;
     private String total;
     private List<Order> orders;
 
@@ -16,6 +17,7 @@ public class Request {
         this.address = address;
         this.total = total;
         this.orders = orders;
+        this.status = "0";
     }
 
     public Request() {
@@ -23,6 +25,14 @@ public class Request {
 
     public String getPhone() {
         return phone;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setPhone(String phone) {

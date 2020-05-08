@@ -11,8 +11,10 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -34,7 +36,7 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     FirebaseDatabase database;
@@ -45,6 +47,7 @@ public class Home extends AppCompatActivity {
     RecyclerView recycler_menu;
     RecyclerView.LayoutManager layoutManager;
     FirebaseRecyclerAdapter<Category, MenuViewHolder> adapter;
+    NavigationView navigationView;
 
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -61,6 +64,9 @@ public class Home extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         category = database.getReference("Category");
 
+        
+
+
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -72,7 +78,7 @@ public class Home extends AppCompatActivity {
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -96,10 +102,15 @@ public class Home extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recycler_menu.setLayoutManager(layoutManager);
 
-
+        //Set Navigation Listener
+        setNavigationViewListener();
 
         loadMenu();
 
+    }
+
+    private void setNavigationViewListener() {
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     private void loadMenu() {
@@ -140,5 +151,37 @@ public class Home extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+
+            case R.id.nav_shop: {
+                //do somthing
+                break;
+            }
+            case R.id.nav_cart: {
+                //do somthing
+                Intent cartIntent = new Intent(Home.this, Cart.class);
+                startActivity(cartIntent);
+                break;
+            }
+            case R.id.nav_orders: {
+                //do somthing
+                Intent orderIntent = new Intent(Home.this, OrderStatus.class);
+                startActivity(orderIntent);
+                break;
+            }
+            case R.id.nav_log_out: {
+                //do somthing
+                Intent signIn = new Intent(Home.this, SignIn.class);
+                signIn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(signIn);
+                break;
+            }
+        }
+
+        return true;
     }
 }
