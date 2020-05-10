@@ -7,11 +7,23 @@
     tools:context=".ItemsList">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
         android:id="@+id/recycler_items"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:scrollbars="vertical"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/searchBar">
+
     </androidx.recyclerview.widget.RecyclerView>
+
+    <com.mancj.materialsearchbar.MaterialSearchBar
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:mt_hint="Enter your item"
+        app:mt_speechMode="false"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
