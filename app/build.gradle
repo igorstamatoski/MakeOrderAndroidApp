@@ -36,6 +36,10 @@ dependencies {
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
 
+    //Glide for large images
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
     implementation 'com.google.firebase:firebase-core:10.2.0'
     implementation 'com.google.firebase:firebase-database:10.2.0'
     implementation 'info.hoang8f:fbutton:1.0.5'

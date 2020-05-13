@@ -13,6 +13,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import javax.sql.CommonDataSource;
+
 public class OrderStatus extends AppCompatActivity {
 
     public RecyclerView recyclerView;
@@ -37,7 +39,16 @@ public class OrderStatus extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        loadOrders(Common.currentUser.getPhone());
+
+        if(getIntent() == null)
+        {
+            loadOrders(Common.currentUser.getPhone());
+        } else
+        {
+            loadOrders(getIntent().getStringExtra("userPhone"));
+        }
+
+
     }
 
     private void loadOrders(String phone) {
@@ -54,7 +65,7 @@ public class OrderStatus extends AppCompatActivity {
             protected void populateViewHolder(OrderViewHolder orderViewHolder, Request request, int i) {
 
                     orderViewHolder.txtOrderId.setText(adapter.getRef(i).getKey());
-                    orderViewHolder.txtOrderStatus.setText(convertCodeToStatus(request.getStatus()));
+                    orderViewHolder.txtOrderStatus.setText(Common.convertCodeToStatus(request.getStatus()));
                     orderViewHolder.txtOrderAddress.setText(request.getAddress());
                     orderViewHolder.txtOrderPhone.setText(request.getPhone());
             }
@@ -64,16 +75,4 @@ public class OrderStatus extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
     }
-
-    private String convertCodeToStatus(String status)
-    {
-        if(status.equals("0"))
-                return "Placed";
-        else if(status.equals("1"))
-            return "On your way";
-        else return "Shipped";
-    }
-
-
-
 }

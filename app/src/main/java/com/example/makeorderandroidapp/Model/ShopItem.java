@@ -1,5 +1,7 @@
 package com.example.makeorderandroidapp.Model;
 
+import androidx.annotation.NonNull;
+
 public class ShopItem {
 
     private String Name;
@@ -7,7 +9,7 @@ public class ShopItem {
     private String Description;
     private String Price;
     private String Discount;
-    private String CatID;
+    private String CatId;
 
     public ShopItem() {
     }
@@ -18,7 +20,7 @@ public class ShopItem {
         Description = description;
         Price = price;
         Discount = discount;
-        CatID = catID;
+        CatId = catID;
     }
 
     public String getName() {
@@ -62,10 +64,16 @@ public class ShopItem {
     }
 
     public String getCatID() {
-        return CatID;
+        return CatId;
     }
 
     public void setCatID(String catID) {
-        CatID = catID;
+        CatId = catID;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Name: "+this.Name+"\nCategory: "+this.CatId;
     }
 }

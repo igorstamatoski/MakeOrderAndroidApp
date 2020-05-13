@@ -1,13 +1,12 @@
 package com.example.makeorderandroidapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.bumptech.glide.Glide;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.makeorderandroidapp.Database.Database;
 import com.example.makeorderandroidapp.Model.Order;
@@ -19,7 +18,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 public class ItemDetails extends AppCompatActivity {
 
@@ -96,8 +94,11 @@ public class ItemDetails extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 currentItem = dataSnapshot.getValue(ShopItem.class);
-                Picasso.with(getBaseContext()).load(currentItem.getImage())
+
+                Glide.with(getBaseContext())
+                        .load(currentItem.getImage())
                         .into(item_image);
+
                 collapsingToolbarLayout.setTitle(currentItem.getName());
                 item_price.setText(currentItem.getPrice());
                 item_name.setText(currentItem.getName());

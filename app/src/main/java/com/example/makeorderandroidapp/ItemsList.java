@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.makeorderandroidapp.Interface.ItemClickListener;
 import com.example.makeorderandroidapp.Model.ShopItem;
 import com.example.makeorderandroidapp.ViewHolder.ItemsViewHolder;
@@ -93,7 +94,6 @@ public class ItemsList extends AppCompatActivity {
                     materialSearchBar.setLastSuggestions(suggest);
                 }
 
-
             }
 
             @Override
@@ -105,8 +105,9 @@ public class ItemsList extends AppCompatActivity {
             @Override
             public void onSearchStateChanged(boolean enabled) {
 
-                if(!enabled)
+                if(!enabled) {
                     recyclerView.setAdapter(adapter);
+                }
             }
 
             @Override
@@ -130,7 +131,7 @@ public class ItemsList extends AppCompatActivity {
                 ShopItem.class,
                 R.layout.shop_item,
                 ItemsViewHolder.class,
-                itemList.orderByChild("Name").equalTo(text.toString())
+                itemList.orderByChild("name").equalTo(text.toString())
         ) {
             @Override
             protected void populateViewHolder(ItemsViewHolder itemsViewHolder, ShopItem shopItem, int i) {
@@ -155,7 +156,7 @@ public class ItemsList extends AppCompatActivity {
     }
 
     private void loadSuggest() {
-        itemList.orderByChild("CatId").equalTo(categoryId)
+        itemList.orderByChild("catID").equalTo(categoryId)
         .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -177,12 +178,15 @@ public class ItemsList extends AppCompatActivity {
         adapter = new FirebaseRecyclerAdapter<ShopItem, ItemsViewHolder>(ShopItem.class,
                 R.layout.shop_item,
                 ItemsViewHolder.class,
-                itemList.orderByChild("CatId").equalTo(categoryId)) {
+                itemList.orderByChild("catID").equalTo(categoryId)) {
 
             @Override
             protected void populateViewHolder(ItemsViewHolder itemsViewHolder, ShopItem shopItem, int position) {
                 itemsViewHolder.txtItemName.setText(shopItem.getName());
-                Picasso.with(getBaseContext()).load(shopItem.getImage())
+
+                Glide.with(getBaseContext())
+                        .load(shopItem.getImage())
+                        .centerCrop()
                         .into(itemsViewHolder.imageView);
 
                 final ShopItem local = shopItem;

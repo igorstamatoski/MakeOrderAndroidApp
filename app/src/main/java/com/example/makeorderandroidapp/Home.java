@@ -2,39 +2,31 @@ package com.example.makeorderandroidapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-
+import com.bumptech.glide.Glide;
 import com.example.makeorderandroidapp.Common.Common;
 import com.example.makeorderandroidapp.Interface.ItemClickListener;
 import com.example.makeorderandroidapp.Model.Category;
+import com.example.makeorderandroidapp.Service.ListenOrder;
 import com.example.makeorderandroidapp.ViewHolder.MenuViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import android.view.MenuItem;
 import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
-
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.Menu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -107,6 +99,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         loadMenu();
 
+        //Register Service
+        Intent service = new Intent(Home.this, ListenOrder.class);
+        startService(service);
     }
 
     private void setNavigationViewListener() {
@@ -120,8 +115,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             protected void populateViewHolder(MenuViewHolder menuViewHolder, Category category, int i) {
 
                 menuViewHolder.txtMenuName.setText(category.getName());
-                Picasso.with(getBaseContext()).load(category.getImage())
+
+                Glide.with(getBaseContext())
+                        .load(category.getImage())
+                        .centerCrop()
                         .into(menuViewHolder.imageView);
+
                 final Category clickItem = category;
                 menuViewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
