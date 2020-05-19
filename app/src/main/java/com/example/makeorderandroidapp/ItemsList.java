@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.makeorderandroidapp.Common.Common;
 import com.example.makeorderandroidapp.Interface.ItemClickListener;
 import com.example.makeorderandroidapp.Model.ShopItem;
 import com.example.makeorderandroidapp.ViewHolder.ItemsViewHolder;
@@ -66,7 +67,12 @@ public class ItemsList extends AppCompatActivity {
 
         if(!categoryId.isEmpty() && categoryId != null)
         {
-            loadItemsList(categoryId);
+            if(Common.isConnectedToInternet(getBaseContext())) {
+                loadItemsList(categoryId);
+            } else {
+                Toast.makeText(ItemsList.this,"Please check your internet connection!",Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
         //Search

@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.example.makeorderandroidapp.Common.Common;
 import com.example.makeorderandroidapp.Database.Database;
 import com.example.makeorderandroidapp.Model.Order;
 import com.example.makeorderandroidapp.Model.ShopItem;
@@ -79,7 +80,12 @@ public class ItemDetails extends AppCompatActivity {
 
         if(!itemId.isEmpty())
         {
-            getItemDetails(itemId);
+            if(Common.isConnectedToInternet(getBaseContext())) {
+                getItemDetails(itemId);
+            } else {
+                Toast.makeText(ItemDetails.this,"Please check your internet connection!",Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
 

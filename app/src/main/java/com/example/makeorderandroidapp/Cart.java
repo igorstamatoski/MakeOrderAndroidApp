@@ -1,5 +1,6 @@
 package com.example.makeorderandroidapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -61,7 +63,11 @@ public class Cart extends AppCompatActivity {
         btnPlace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAlertDialog();
+                if(orders.size() > 0) {
+                    showAlertDialog();
+                } else {
+                    Toast.makeText(Cart.this,"Your cart is empty!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         
@@ -122,6 +128,7 @@ public class Cart extends AppCompatActivity {
 
         orders = new Database(this).getCarts();
         adapter = new CartAdapter(orders, this);
+        adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
 
         //Calculating
@@ -136,7 +143,25 @@ public class Cart extends AppCompatActivity {
         NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
 
         txtTotalPrice.setText(fmt.format(total));
+    }
 
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if(item.getTitle().equals(Common.DELETE))
+        {
+            deleteCartItem(item.getOrder());
+        }
+        return true;
+    }
 
+    private void deleteCartItem(int position) {
+        orders.remove(position);
+        new Database(this).cleanCart();
+        for(Order order : orders)
+        {
+            new Database(this).addToCart(order);
+        }
+
+        loadListItems();
     }
 }

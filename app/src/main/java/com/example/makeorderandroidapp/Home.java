@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -97,7 +98,12 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         //Set Navigation Listener
         setNavigationViewListener();
 
-        loadMenu();
+        if(Common.isConnectedToInternet(this)) {
+            loadMenu();
+        } else{
+            Toast.makeText(this,"Please check your internet connection!",Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         //Register Service
         Intent service = new Intent(Home.this, ListenOrder.class);
@@ -153,8 +159,21 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
     }
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.refresh: {
+                //do something
+                loadMenu();
+                break;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
+        switch(menuItem.getItemId()){
 
             case R.id.nav_shop: {
                 //do somthing
