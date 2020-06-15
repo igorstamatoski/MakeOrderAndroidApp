@@ -29,6 +29,8 @@ import android.view.Menu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import io.paperdb.Paper;
+
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
@@ -57,10 +59,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         database = FirebaseDatabase.getInstance();
         category = database.getReference("Category");
 
-        
-
-
-
+        Paper.init(this);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -192,6 +191,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 break;
             }
             case R.id.nav_log_out: {
+
+                //Delete Remember user&pass
+                Paper.book().destroy();
+
                 //do somthing
                 Intent signIn = new Intent(Home.this, SignIn.class);
                 signIn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

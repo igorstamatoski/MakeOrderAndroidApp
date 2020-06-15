@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.makeorderandroidapp.Common.Common;
+import com.example.makeorderandroidapp.Database.Database;
 import com.example.makeorderandroidapp.Interface.ItemClickListener;
 import com.example.makeorderandroidapp.Model.ShopItem;
 import com.example.makeorderandroidapp.ViewHolder.ItemsViewHolder;
@@ -44,6 +45,9 @@ public class ItemsList extends AppCompatActivity {
     List<String> suggestList = new ArrayList<>();
     MaterialSearchBar materialSearchBar;
 
+    //Favourites
+    Database localDB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +56,9 @@ public class ItemsList extends AppCompatActivity {
         //Init Firebase
         database = FirebaseDatabase.getInstance();
         itemList = database.getReference("Shop");
+
+        //Local DB
+        localDB = new Database(this);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_items);
         recyclerView.setHasFixedSize(true);
@@ -187,13 +194,39 @@ public class ItemsList extends AppCompatActivity {
                 itemList.orderByChild("catID").equalTo(categoryId)) {
 
             @Override
-            protected void populateViewHolder(ItemsViewHolder itemsViewHolder, ShopItem shopItem, int position) {
+            protected void populateViewHolder(final ItemsViewHolder itemsViewHolder, final ShopItem shopItem, final int position) {
                 itemsViewHolder.txtItemName.setText(shopItem.getName());
 
                 Glide.with(getBaseContext())
                         .load(shopItem.getImage())
                         .centerCrop()
                         .into(itemsViewHolder.imageView);
+
+                //Add Favourites
+                if(localDB.isFavourite(adapter.getRef(position).getKey()))
+                {
+                    itemsViewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
+                }
+
+                //Changing state of Favourites
+                itemsViewHolder.fav_image.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if(!localDB.isFavourite(adapter.getRef(position).getKey()))
+                        {
+                            localDB.addToFavourites(adapter.getRef(position).getKey());
+                            itemsViewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
+                            Toast.makeText(ItemsList.this,"" + shopItem.getName() + " was added to Favourites!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            localDB.deleteFromFavourites(adapter.getRef(position).getKey());
+                            itemsViewHolder.fav_image.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                            Toast.makeText(ItemsList.this,"" + shopItem.getName() + " was removed from Favourites!", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+                });
 
                 final ShopItem local = shopItem;
                 itemsViewHolder.setItemClickListener(new ItemClickListener() {

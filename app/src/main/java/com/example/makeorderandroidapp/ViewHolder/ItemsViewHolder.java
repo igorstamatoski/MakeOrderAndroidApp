@@ -13,7 +13,7 @@ import com.example.makeorderandroidapp.R;
 public class ItemsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     public TextView txtItemName;
-    public ImageView imageView;
+    public ImageView imageView, fav_image;
 
     private ItemClickListener itemClickListener;
 
@@ -26,7 +26,7 @@ public class ItemsViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
         txtItemName = (TextView) itemView.findViewById(R.id.item_name);
         imageView = (ImageView) itemView.findViewById(R.id.item_image);
-
+        fav_image = (ImageView) itemView.findViewById(R.id.fav);
         itemView.setOnClickListener(this);
     }
 
