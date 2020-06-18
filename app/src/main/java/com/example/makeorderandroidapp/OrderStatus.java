@@ -39,7 +39,6 @@ public class OrderStatus extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-
         if(getIntent() == null)
         {
             loadOrders(Common.currentUser.getPhone());
@@ -53,13 +52,17 @@ public class OrderStatus extends AppCompatActivity {
 
     private void loadOrders(String phone) {
 
+        if(phone == null)
+        {
+            phone = Common.currentUser.getPhone();
+        }
+
         adapter = new FirebaseRecyclerAdapter<Request, OrderViewHolder>(
                 Request.class,
                 R.layout.order_layout,
                 OrderViewHolder.class,
                 requests.orderByChild("phone")
-                .equalTo(phone)
-
+                        .equalTo(phone)
         ) {
             @Override
             protected void populateViewHolder(OrderViewHolder orderViewHolder, Request request, int i) {
@@ -71,8 +74,7 @@ public class OrderStatus extends AppCompatActivity {
             }
         };
 
-
-
+        adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
     }
 }

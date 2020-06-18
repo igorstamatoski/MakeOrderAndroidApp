@@ -9,30 +9,24 @@ public class Request {
     private String address;
     private String status;
     private String total;
+    private String comment;
     private List<Order> orders;
-
-    public Request(String phone, String name, String address, String total, List<Order> orders) {
-        this.phone = phone;
-        this.name = name;
-        this.address = address;
-        this.total = total;
-        this.orders = orders;
-        this.status = "0";
-    }
 
     public Request() {
     }
 
+    public Request(String phone, String name, String address, String status, String total, String comment, List<Order> orders) {
+        this.phone = phone;
+        this.name = name;
+        this.address = address;
+        this.status = status;
+        this.total = total;
+        this.comment = comment;
+        this.orders = orders;
+    }
+
     public String getPhone() {
         return phone;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public void setPhone(String phone) {
@@ -55,12 +49,28 @@ public class Request {
         this.address = address;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getTotal() {
         return total;
     }
 
     public void setTotal(String total) {
         this.total = total;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public List<Order> getOrders() {
