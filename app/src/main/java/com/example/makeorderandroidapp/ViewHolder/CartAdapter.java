@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.bumptech.glide.Glide;
 import com.example.makeorderandroidapp.Common.Common;
 import com.example.makeorderandroidapp.Interface.ItemClickListener;
 import com.example.makeorderandroidapp.Model.Order;
@@ -29,6 +30,7 @@ View.OnCreateContextMenuListener {
 
     public TextView txt_cart_name, txt_price;
     public ImageView img_cart_count;
+    public ImageView cart_image;
 
     private ItemClickListener itemClickListener;
 
@@ -46,7 +48,7 @@ View.OnCreateContextMenuListener {
         txt_cart_name = (TextView) itemView.findViewById(R.id.cart_item_name);
         txt_price = (TextView) itemView.findViewById(R.id.cart_item_price);
         img_cart_count = (ImageView) itemView.findViewById(R.id.card_item_count);
-
+        cart_image = (ImageView) itemView.findViewById(R.id.cart_image);
         itemView.setOnCreateContextMenuListener(this);
     }
 
@@ -85,6 +87,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
+
+        Glide.with(context).load(orders.get(position).getImage())
+          .centerCrop()
+                .into(holder.cart_image);
 
         TextDrawable drawable = TextDrawable.builder()
                 .buildRound(""+orders.get(position).getQuantity(), Color.RED);
