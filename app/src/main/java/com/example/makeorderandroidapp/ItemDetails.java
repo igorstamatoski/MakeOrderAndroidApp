@@ -115,7 +115,8 @@ public class ItemDetails extends AppCompatActivity implements RatingDialogListen
                         numberButton.getNumber(),
                         currentItem.getPrice(),
                         currentItem.getDiscount(),
-                        currentItem.getImage()
+                        currentItem.getImage(),
+                        Common.currentUser.getPhone()
                 ));
 
                 Toast.makeText(ItemDetails.this, "Added to Cart", Toast.LENGTH_SHORT).show();

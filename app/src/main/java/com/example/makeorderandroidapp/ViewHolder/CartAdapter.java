@@ -24,45 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
-View.OnCreateContextMenuListener {
-
-
-    public TextView txt_cart_name, txt_price;
-    public ImageView img_cart_count;
-    public ImageView cart_image;
-
-    private ItemClickListener itemClickListener;
-
-    public void setItemClickListener(ItemClickListener itemClickListener) {
-        this.itemClickListener = itemClickListener;
-    }
-
-    public void setTxt_cart_name(TextView txt_cart_name) {
-        this.txt_cart_name = txt_cart_name;
-    }
-
-    public CartViewHolder(@NonNull View itemView) {
-        super(itemView);
-
-        txt_cart_name = (TextView) itemView.findViewById(R.id.cart_item_name);
-        txt_price = (TextView) itemView.findViewById(R.id.cart_item_price);
-        img_cart_count = (ImageView) itemView.findViewById(R.id.card_item_count);
-        cart_image = (ImageView) itemView.findViewById(R.id.cart_image);
-        itemView.setOnCreateContextMenuListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        menu.setHeaderTitle("Select action");
-        menu.add(0,0,getAdapterPosition(), Common.DELETE);
-    }
-}
 
 
 
@@ -108,5 +69,22 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
     @Override
     public int getItemCount() {
         return orders.size();
+    }
+
+    public Order getItem(int position)
+    {
+        return orders.get(position);
+    }
+
+    public void removeItem(int position)
+    {
+        orders.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(Order item, int position)
+    {
+        orders.add(position, item);
+        notifyItemInserted(position);
     }
 }

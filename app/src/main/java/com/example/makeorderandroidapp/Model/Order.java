@@ -8,17 +8,19 @@ public class Order {
     private String Price;
     private String Discount;
     private String Image;
+    private String UserPhone;
 
     public Order() {
     }
 
-    public Order(String productId, String productName, String quantity, String price, String discount, String image) {
+    public Order(String productId, String productName, String quantity, String price, String discount, String image, String userPhone) {
         ProductId = productId;
         ProductName = productName;
         Quantity = quantity;
         Price = price;
         Discount = discount;
         Image = image;
+        UserPhone = userPhone;
     }
 
     public String getProductId() {
@@ -67,5 +69,13 @@ public class Order {
 
     public void setImage(String image) {
         Image = image;
+    }
+
+    public String getUserPhone() {
+        return UserPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        UserPhone = userPhone;
     }
 }

@@ -22,7 +22,7 @@ public class Database extends SQLiteAssetHelper {
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-        String[] sqlSelect = {"ProductName","ProductId","Quantity","Price","Discount", "Image"};
+        String[] sqlSelect = {"ProductName","ProductId","Quantity","Price","Discount", "Image", "UserPhone"};
         String sqlTable="OrderDetail";
 
         qb.setTables(sqlTable);
@@ -37,7 +37,8 @@ public class Database extends SQLiteAssetHelper {
                         c.getString(c.getColumnIndex("Quantity")),
                         c.getString(c.getColumnIndex("Price")),
                         c.getString(c.getColumnIndex("Discount")),
-                        c.getString(c.getColumnIndex("Image"))
+                        c.getString(c.getColumnIndex("Image")),
+                        c.getString(c.getColumnIndex("UserPhone"))
                         ));
             } while (c.moveToNext());
         }
@@ -47,13 +48,14 @@ public class Database extends SQLiteAssetHelper {
 
     public void addToCart(Order order){
        SQLiteDatabase db = getReadableDatabase();
-       String query = String.format("INSERT INTO OrderDetail(ProductId, ProductName, Quantity, Price, Discount, Image) VALUES ('%s','%s','%s','%s','%s','%s');",
+       String query = String.format("INSERT INTO OrderDetail(ProductId, ProductName, Quantity, Price, Discount, Image, UserPhone) VALUES ('%s','%s','%s','%s','%s','%s','%s');",
                order.getProductId(),
                order.getProductName(),
                order.getQuantity(),
                order.getPrice(),
                order.getDiscount(),
-               order.getImage());
+               order.getImage(),
+               order.getUserPhone());
         db.execSQL(query);
     }
 
@@ -93,4 +95,11 @@ public class Database extends SQLiteAssetHelper {
         return true;
     }
 
+
+    public void removeFromCart(String productId, String phone) {
+
+        SQLiteDatabase db = getReadableDatabase();
+        String query = String.format("DELETE FROM OrderDetail WHERE UserPhone='%s' and ProductId='%s'", phone, productId);
+        db.execSQL(query);
+    }
 }
