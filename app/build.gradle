@@ -32,6 +32,13 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+
+    //Circle image view library
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //Facebook Account Kit
+    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+
     //Adding Library
     implementation 'io.paperdb:paperdb:2.1'
     implementation 'com.stepstone.apprating:app-rating:2.0.0'
@@ -43,6 +50,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
+    //noinspection GradleCompatible
     implementation 'com.google.firebase:firebase-core:10.2.0'
     implementation 'com.google.firebase:firebase-database:10.2.0'
     implementation 'info.hoang8f:fbutton:1.0.5'

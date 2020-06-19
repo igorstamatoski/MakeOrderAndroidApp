@@ -3,6 +3,7 @@ package com.example.makeorderandroidapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
@@ -56,7 +57,7 @@ public class SignUp extends AppCompatActivity {
                             //Check if phone already exists
                             if (dataSnapshot.child(edtPhone.getText().toString()).exists()) {
                                 mDialog.dismiss();
-                                Toast.makeText(SignUp.this, "Phone Number already exists!", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(SignUp.this, "Phone Number already exists!", Toast.LENGTH_SHORT).show();
                             } else {
                                 mDialog.dismiss();
                                 User user = new User(edtName.getText().toString(),
@@ -64,7 +65,10 @@ public class SignUp extends AppCompatActivity {
                                         edtSecureCode.getText().toString());
                                 table_user.child(edtPhone.getText().toString()).setValue(user);
                                 Toast.makeText(SignUp.this, "Sign Up successfully!", Toast.LENGTH_SHORT).show();
-                                finish();
+
+                                Common.currentUser = user;
+                                Intent intent = new Intent(SignUp.this, Home.class);
+                                startActivity(intent);
                             }
                         }
 

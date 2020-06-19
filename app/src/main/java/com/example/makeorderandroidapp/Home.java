@@ -8,6 +8,7 @@ import com.example.makeorderandroidapp.Interface.ItemClickListener;
 import com.example.makeorderandroidapp.Model.Category;
 import com.example.makeorderandroidapp.Service.ListenOrder;
 import com.example.makeorderandroidapp.ViewHolder.MenuViewHolder;
+import com.facebook.login.LoginManager;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.view.MenuItem;
@@ -176,6 +177,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
             case R.id.nav_shop: {
                 //do somthing
+                Intent home = new Intent(Home.this, Home.class);
+                startActivity(home);
                 break;
             }
             case R.id.nav_cart: {
@@ -195,10 +198,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 //Delete Remember user&pass
                 Paper.book().destroy();
 
-                //do somthing
-                Intent signIn = new Intent(Home.this, SignIn.class);
-                signIn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(signIn);
+                LoginManager.getInstance().logOut();
+                Intent home = new Intent(Home.this, MainActivity.class);
+                home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(home);
                 break;
             }
         }

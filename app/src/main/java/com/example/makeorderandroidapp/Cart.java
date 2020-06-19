@@ -99,8 +99,8 @@ public class Cart extends AppCompatActivity {
                         Common.currentUser.getPhone(),
                         Common.currentUser.getName(),
                         edtAddress.getText().toString(),
-                        txtTotalPrice.getText().toString(),
                         "0", //status
+                        txtTotalPrice.getText().toString(),
                         edtComment.getText().toString(),
                         orders
                 );
