@@ -8,6 +8,7 @@ import com.example.makeorderandroidapp.Interface.ItemClickListener;
 import com.example.makeorderandroidapp.Model.Category;
 import com.example.makeorderandroidapp.Service.ListenOrder;
 import com.example.makeorderandroidapp.ViewHolder.MenuViewHolder;
+import com.facebook.FacebookActivity;
 import com.facebook.login.LoginManager;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -177,6 +178,9 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
             case R.id.nav_favourites: {
                 //do somthing
+
+                Intent favourites = new Intent(Home.this, FavouritesActivity.class);
+                startActivity(favourites);
 
                 break;
             }

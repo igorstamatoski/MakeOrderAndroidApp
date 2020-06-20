@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mancj.materialsearchbar.MaterialSearchBar;
+import com.example.makeorderandroidapp.Model.Favourites;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class ItemsList extends AppCompatActivity {
     List<String> suggestList = new ArrayList<>();
     MaterialSearchBar materialSearchBar;
 
-    //Favourites
+    //FavouritesActivity
     Database localDB;
 
     @Override
@@ -202,26 +203,36 @@ public class ItemsList extends AppCompatActivity {
                         .centerCrop()
                         .into(itemsViewHolder.imageView);
 
-                //Add Favourites
-                if(localDB.isFavourite(adapter.getRef(position).getKey()))
+                //Add FavouritesActivity
+                if(localDB.isFavourite(adapter.getRef(position).getKey(), Common.currentUser.getPhone()))
                 {
                     itemsViewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
                 }
 
-                //Changing state of Favourites
+                //Changing state of FavouritesActivity
                 itemsViewHolder.fav_image.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Favourites favourites = new Favourites();
+                        favourites.setItemId(adapter.getRef(position).getKey());
+                        favourites.setItemName(shopItem.getName());
+                        favourites.setItemDescription(shopItem.getDescription());
+                        favourites.setItemDiscount(shopItem.getDiscount());
+                        favourites.setItemImage(shopItem.getImage());
+                        favourites.setItemCatId(shopItem.getCatID());
+                        favourites.setUserPhone(Common.currentUser.getPhone());
+                        favourites.setItemPrice(shopItem.getPrice());
 
-                        if(!localDB.isFavourite(adapter.getRef(position).getKey()))
+
+                        if(!localDB.isFavourite(adapter.getRef(position).getKey(), Common.currentUser.getPhone()))
                         {
-                            localDB.addToFavourites(adapter.getRef(position).getKey());
+                            localDB.addToFavourites(favourites);
                             itemsViewHolder.fav_image.setImageResource(R.drawable.ic_favorite_black_24dp);
-                            Toast.makeText(ItemsList.this,"" + shopItem.getName() + " was added to Favourites!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ItemsList.this,"" + shopItem.getName() + " was added to FavouritesActivity!", Toast.LENGTH_SHORT).show();
                         } else {
-                            localDB.deleteFromFavourites(adapter.getRef(position).getKey());
+                            localDB.deleteFromFavourites(adapter.getRef(position).getKey(), Common.currentUser.getPhone());
                             itemsViewHolder.fav_image.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-                            Toast.makeText(ItemsList.this,"" + shopItem.getName() + " was removed from Favourites!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ItemsList.this,"" + shopItem.getName() + " was removed from FavouritesActivity!", Toast.LENGTH_SHORT).show();
 
                         }
 
